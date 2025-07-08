@@ -58,7 +58,7 @@ const generateWord = () => {
     <span>Hint:</span> ${randomHint} </div>`;
     let displayItem = "";
     randomWord.split("").forEach((value) => {
-        displayItem += `<span class="inputSpace">_</span>`;
+        displayItem += `<span class="inputSpace">_ </span>`;
     });
 
     // Display each element as a span
