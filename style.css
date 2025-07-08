@@ -86,6 +86,8 @@ body{
 }
 #word{
     font-weight: 600;
+    margin: 1em 0 2em 0;
+    
 }
 #word span{
     text-transform: uppercase;

@@ -89,27 +89,48 @@ const init = () => {
 
         //Character button onclick event
         button.addEventListener("click", (e) => {
-            if (randomWord.includes(e.target.innerText.toLowerCase())) {
-                e.target.classList.add("correct");
-                winCount++;
-                userInpSection.querySelectorAll(".inputSpace").forEach((space, index) => {
-                    if (randomWord[index] === e.target.innerText.toLowerCase()) {
-                        space.innerText = e.target.innerText.toLowerCase();
+            message.innerText = `Correct Letter`;
+            message.style.color = "#008000";
+            let charArray = randomWord.toUpperCase().split("");
+            let inputSpace = document.getElementsByClassName("inputSpace");
+
+            // If array contains clicked value replace matched dosh with letter
+            if(charArray.includes(button.innerText)){
+                charArray.forEach((char, index) => {
+                    // if character  in array is same as clicked button
+                    if(char === button.innerText) {
+                        button.classList.add("correct");
+                        // Replace the dash with the letter
+                        inputSpace[index].innerText = char;
+                        // Increment win count
+                        winCount += 1;
+                        // If win count is equal to the length of the word
+                        if(winCount == charArray.length) {
+                            resultText.innerText = "You Won!";
+                            startBtn.innerText = "Restart ";
+                            // block all the buttons
+                            blocker();
+                        }
                     }
                 });
-            } else {
-                e.target.classList.add("incorrect");
-                lossCount--;
             }
-            // Check if user won or lost
-            if (winCount === randomWord.length) {
-                message.innerText = "Congratulations! You've guessed the word!";
-                blocker();
-            } else if (lossCount === 0) {
-                message.innerText = `Game over! The word was "${randomWord}".`;
-                blocker();
+            else {
+             //loss count
+             button.classList.add("incorrect");
+                lossCount -= 1;
+                document.getElementById("chanceCount").innerText = `Chances Left: ${lossCount}`;
+                message.innerText = `Incorrect Letter`;
+                message.style.color = "#ff0000";
+                if(lossCount == 0) {
+                    word.innerHTML = `The word was: <span>${randomWord}</span>`;
+                    resultText.innerText = "Game Over!";
+                    blocker();
+                }
             }
+            // Disable the button after click
+            button.disabled = true;
         });
+
 
         // Append event listener to each button
         letterContainer.appendChild(button);
